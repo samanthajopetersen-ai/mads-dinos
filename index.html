@@ -124,9 +124,10 @@
     flex-direction: column;
   }
 
+ /* 1. Make layout stack vertically on mobile screens */
   .game-container {
-    display: grid;
-    grid-template-columns: 240px 1fr 260px;
+    display: flex;
+    flex-direction: column;
     gap: 12px;
     width: 100%;
   }
@@ -284,24 +285,26 @@
   .face-3 { transform: rotateY(180deg) translateZ(21px); }
   .face-4 { transform: rotateY(-90deg) translateZ(21px); }
 
-  /* EXPANDED BOARD */
+/* 2. Allow the board grid tiles to scale dynamically */
   #board {
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 6px;
     background: var(--panel-bg);
-    padding: 12px;
+    padding: 8px;
     border-radius: 8px;
   }
 
+  /* 3. Ensure tiles scale proportionally on narrow screens */
   .tile {
-    aspect-ratio: 1.1;
+    aspect-ratio: 1;
+    min-height: 65px;
     border-radius: 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 4px;
+    padding: 2px;
     font-size: 0.75rem;
     position: relative;
     border: 1px solid rgba(255,255,255,0.2);
