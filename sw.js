@@ -1,7 +1,7 @@
 const CACHE_NAME = 'mads-dinos-v1';
 const ASSETS = [
   './',
-  './Mad\'s%20Dinos.html',
+  './index.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
