@@ -75,6 +75,7 @@
     width: 100%;
     text-align: center;
     box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+    box-sizing: border-box;
   }
 
   .mode-select { margin-bottom: 12px; font-size: 0.9rem; }
@@ -115,16 +116,15 @@
   }
   button:disabled { background: #555; cursor: not-allowed; opacity: 0.5; }
 
-  /* THREE-COLUMN GAME LAYOUT */
+  /* RESPONSIVE MOBILE LAYOUT */
   #game-screen {
     display: none;
     width: 100%;
-    max-width: 1500px;
+    max-width: 1000px;
     gap: 12px;
     flex-direction: column;
   }
 
- /* 1. Make layout stack vertically on mobile screens */
   .game-container {
     display: flex;
     flex-direction: column;
@@ -132,11 +132,12 @@
     width: 100%;
   }
 
-  /* LEFT SIDEBAR LEGEND */
-  .sidebar-left {
+  /* SIDEBARS STACK VERTICALLY */
+  .sidebar-left, .sidebar-right {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
 
   .legend-box {
@@ -187,18 +188,31 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    width: 100%;
   }
 
+  /* TOP CONTROLS (STACKS CLEANLY ON SMALL SCREENS) */
   .top-controls {
-    display: grid;
-    grid-template-columns: 1fr 140px 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
-    height: 110px;
+    height: auto;
+  }
+
+  @media (min-width: 600px) {
+    .top-controls {
+      display: grid;
+      grid-template-columns: 1fr 140px 1fr;
+    }
+    .game-container {
+      display: grid;
+      grid-template-columns: 240px 1fr 260px;
+    }
   }
 
   .panel {
     background: var(--panel-bg);
-    padding: 8px 12px;
+    padding: 10px;
     border-radius: 6px;
     font-size: 0.85rem;
     box-sizing: border-box;
@@ -209,13 +223,6 @@
 
   .panel h3 { margin: 0 0 4px 0; font-size: 0.9rem; color: var(--accent); }
   .panel p { margin: 2px 0; }
-
-  /* RIGHT SIDEBAR STYLING */
-  .sidebar-right {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
 
   .fact-box {
     background: #16241b;
@@ -233,7 +240,7 @@
     padding: 12px;
     border-radius: 6px;
     font-size: 0.75rem;
-    max-height: 380px;
+    max-height: 220px;
     overflow-y: auto;
   }
 
@@ -247,7 +254,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 4px;
+    padding: 8px;
   }
 
   .scene {
@@ -285,37 +292,38 @@
   .face-3 { transform: rotateY(180deg) translateZ(21px); }
   .face-4 { transform: rotateY(-90deg) translateZ(21px); }
 
-/* 2. Allow the board grid tiles to scale dynamically */
+  /* FLEXIBLE BOARD GRID FOR MOBILE */
   #board {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 6px;
     background: var(--panel-bg);
     padding: 8px;
     border-radius: 8px;
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  /* 3. Ensure tiles scale proportionally on narrow screens */
   .tile {
     aspect-ratio: 1;
-    min-height: 65px;
+    min-height: 60px;
     border-radius: 6px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    padding: 2px;
-    font-size: 0.75rem;
+    padding: 4px;
+    font-size: 0.7rem;
     position: relative;
     border: 1px solid rgba(255,255,255,0.2);
     box-sizing: border-box;
     text-align: center;
-    overflow: visible;
+    overflow: hidden;
   }
 
   .tile-num { position: absolute; top: 2px; left: 4px; opacity: 0.6; font-size: 0.65rem; }
-  .tile-icon { font-size: 1.3rem; margin-top: 4px; }
-  .tile-title { font-size: 0.65rem; font-weight: bold; word-break: break-word; line-height: 1; z-index: 1; }
+  .tile-icon { font-size: 1.2rem; margin-top: 2px; }
+  .tile-title { font-size: 0.6rem; font-weight: bold; word-break: break-word; line-height: 1; z-index: 1; }
 
   .tile.safe { background: rgba(39, 174, 96, 0.25); border-color: var(--safe); }
   .tile.obstacle { background: rgba(192, 57, 43, 0.25); border-color: var(--obstacle); }
@@ -326,29 +334,30 @@
     display: flex;
     gap: 2px;
     flex-wrap: wrap;
-    position: absolute;
-    bottom: -6px;
+    position: relative;
+    bottom: 0;
     justify-content: center;
     width: 100%;
-    z-index: 10;
+    z-index: 2;
   }
 
   .player-marker {
-    font-size: 2.2rem;
+    font-size: 1.5rem;
     line-height: 1;
-    filter: drop-shadow(0 3px 4px rgba(0,0,0,0.9));
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.9));
   }
 
   .tombstone-marker {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     line-height: 1;
-    filter: drop-shadow(0 3px 4px rgba(0,0,0,0.9));
+    filter: drop-shadow(0 2px 3px rgba(0,0,0,0.9));
   }
 
   .badge { display: inline-block; padding: 2px 5px; border-radius: 6px; font-size: 0.75em; background: #34495e; margin: 1px; }
 
   #log {
     height: 100%;
+    min-height: 60px;
     max-height: 85px;
     overflow-y: auto;
     background: #111;
